@@ -3,8 +3,22 @@ import { useState } from 'react'
 const Button = ({text, handler}) => <button onClick={handler}>{text}</button>
 
 const StaticLine = ({text, value}) => {
-  if (text === "positive") return (<div>{text} {value} %</div>)
-  else return (<div>{text} {value}</div>)
+  if (text === "positive") {
+    return (
+      <tr>
+        <td>{text}</td>
+        <td>{value} %</td>
+      </tr>
+    )
+  }
+  else {
+    return (
+      <tr>
+        <td>{text}</td>
+        <td>{value}</td>
+      </tr>
+    )
+  }
 }
 
 const Statistics = (props) => {
@@ -16,15 +30,17 @@ const Statistics = (props) => {
 
   else {
     return (
-      <>
-        <StaticLine text="good" value={props.good}/>
-        <StaticLine text="neutral" value={props.neutral}/>
-        <StaticLine text="bad" value={props.bad}/>
+      <table>
+        <tbody>
+          <StaticLine text="good" value={props.good}/>
+          <StaticLine text="neutral" value={props.neutral}/>
+          <StaticLine text="bad" value={props.bad}/>
 
-        <StaticLine text="all" value={props.all}/>
-        <StaticLine text="average" value={props.average}/>
-        <StaticLine text="positive" value={props.positive}/>
-      </>
+          <StaticLine text="all" value={props.all}/>
+          <StaticLine text="average" value={props.average}/>
+          <StaticLine text="positive" value={props.positive}/>
+        </tbody>
+      </table>
     )
   }
 }
