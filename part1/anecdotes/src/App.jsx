@@ -31,14 +31,15 @@ function App() {
 
   return (
     <>
-      <div>
-        {anecdotes[selected]}
-      </div>
-      <div>
-        has {votes[selected]} votes
-      </div>
+      <h1>Anecdote of the day</h1>
+      <div>{anecdotes[selected]}</div>
+      <div>has {votes[selected]} votes</div>
       <button onClick={addVote}>vote</button>
       <button onClick={randomAnecdote}>next anecdote</button>
+
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[votes.indexOf(Math.max(...votes))]}</div>
+      <div>has {votes[votes.indexOf(Math.max(...votes))]} votes</div>
     </>
   )
 }

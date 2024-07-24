@@ -6,4 +6,4 @@
 
 ## PART 1
 - Started: 07/22/2024
-- Finished: In process...
+- Finished: 07/24/2024
