@@ -8,17 +8,25 @@ const Display = ({text, count}) => {
 }
 
 const Statistics = (props) => {
-  return (
-    <>
-      <Display text="good" count={props.good}/>
-      <Display text="neutral" count={props.neutral}/>
-      <Display text="bad" count={props.bad}/>
+  const isNoFeedback = props.good === 0 && props.neutral === 0 && props.bad === 0
 
-      <Display text="all" count={props.all}/>
-      <Display text="average" count={props.average}/>
-      <Display text="positive" count={props.positive}/>
-    </>
-  )
+  if (isNoFeedback){
+    return <p>No feedback given</p>
+  }
+
+  else {
+    return (
+      <>
+        <Display text="good" count={props.good}/>
+        <Display text="neutral" count={props.neutral}/>
+        <Display text="bad" count={props.bad}/>
+
+        <Display text="all" count={props.all}/>
+        <Display text="average" count={props.average}/>
+        <Display text="positive" count={props.positive}/>
+      </>
+    )
+  }
 }
 
 function App() {
