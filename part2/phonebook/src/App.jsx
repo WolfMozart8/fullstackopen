@@ -9,6 +9,9 @@ function App() {
 
   const addPerson = (event) => {
     event.preventDefault()
+    if (checkRepeated()) {
+      return
+    }
 
     const newPerson = {name: newName}
     setPersons(persons.concat(newPerson))
@@ -17,6 +20,21 @@ function App() {
 
   const newNameHandler = (event) => {
     setNewName(event.target.value)
+  }
+
+  const checkRepeated = () => {
+
+    let isRepeated = false
+
+    persons.forEach(person => {
+      if (person.name === newName) {
+        alert(`${newName} is already added to phonebook`)
+        isRepeated = true
+        return
+      }
+    })
+
+    return isRepeated
   }
 
   return (
