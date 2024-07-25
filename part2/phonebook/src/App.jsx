@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import Filter from './components/Filter';
+import PersonsForm from './components/PersonForm';
+import PersonList from './components/PersonList';
 
 function App() {
-  // const [persons, setPersons] = useState([
-  //   { name: 'Arto Hellas', phone: 12345678 }
-  // ])
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
@@ -19,7 +19,6 @@ function App() {
     ? persons
     : persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
 
-  console.log(filteredByName);
   const addPerson = (event) => {
     event.preventDefault()
     if (checkRepeated()) {
@@ -65,15 +64,17 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>filter shown with <input value={search} onChange={searchByName} /></div>
+      <Filter search={search} searchHandler={searchByName} />
       <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>name: <input value={newName} onChange={newNameHandler}/></div>
-        <div>number: <input value={newPhone} onChange={newPhoneHandler} /></div>
-        <div><button type="submit">add</button></div>
-      </form>
+      <PersonsForm
+        formHandler={addPerson}
+        newName={newName}
+        newNameHandler={newNameHandler}
+        newPhone={newPhone}
+        newPhoneHandler={newPhoneHandler}
+      />
       <h2>Numbers</h2>
-      {filteredByName.map(person => <div>{person.name} {person.phone}</div>)}
+      <PersonList personList={filteredByName} />
     </div>
   )
 }
