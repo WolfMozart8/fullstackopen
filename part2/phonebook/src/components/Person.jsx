@@ -1,6 +1,6 @@
 const Person = ({person}) => {
     return (
-        <div key={person.id}>{person.name} {person.phone}</div>
+        <div>{person.name} {person.number}</div>
     )
 }
 

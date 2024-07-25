@@ -3,7 +3,7 @@ import Person from "./Person";
 const PersonList = ({personList}) => {
     return (
         <>
-            {personList.map(person => <Person person={person} />)}
+            {personList.map(person => <Person person={person} key={person.id} />)}
         </>
     )
 }
