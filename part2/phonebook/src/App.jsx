@@ -2,10 +2,11 @@ import { useState } from 'react'
 
 function App() {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', phone: 12345678 }
   ])
 
   const [newName, setNewName] = useState('')
+  const [newPhone, setNewPhone] = useState("");
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -13,13 +14,21 @@ function App() {
       return
     }
 
-    const newPerson = {name: newName}
+    const newPerson = {
+      name: newName,
+      phone: newPhone,
+    }
     setPersons(persons.concat(newPerson))
     setNewName("")
+    setNewPhone("")
   }
 
   const newNameHandler = (event) => {
     setNewName(event.target.value)
+  }
+
+  const newPhoneHandler = (event) => {
+    setNewPhone(event.target.value)
   }
 
   const checkRepeated = () => {
@@ -41,15 +50,12 @@ function App() {
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={newNameHandler}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
+        <div>name: <input value={newName} onChange={newNameHandler}/></div>
+        <div>number: <input value={newPhone} onChange={newPhoneHandler} /></div>
+        <div><button type="submit">add</button></div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <div>{person.name}</div>)}
+      {persons.map(person => <div>{person.name} {person.phone}</div>)}
     </div>
   )
 }
