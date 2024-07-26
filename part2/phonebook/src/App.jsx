@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react'
+import "./index.css"
+
 import personService from "./services/person";
 
 import Filter from './components/Filter';
 import PersonsForm from './components/PersonForm';
 import PersonList from './components/PersonList';
+import Notification from './components/Notification';
 
 function App() {
   const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState("");
+  const [messageAdd, setMessageAdd] = useState(null);
 
   const [search, setSearch] = useState("");
   const filteredByName = search === ""
@@ -39,6 +43,8 @@ function App() {
       name: newName,
       number: newPhone,
     }
+
+    showMessageAdd(newName)
 
     personService
       .add(newPerson)
@@ -89,6 +95,13 @@ function App() {
     return isRepeated
   }
 
+  const showMessageAdd = (personName) => {
+    setMessageAdd(`Added ${personName}`)
+    setTimeout(() => {
+      setMessageAdd(null)
+    }, 5000)
+  }
+
 
   useEffect(() => {
     personService
@@ -99,6 +112,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={messageAdd} />
       <Filter search={search} searchHandler={searchByName} />
       <h2>add a new</h2>
       <PersonsForm
