@@ -20,8 +20,15 @@ const remove = (id) => {
                 .catch(err => console.error(err))
 }
 
+const update = (id, updatedNumber) => {
+    const request = axios.put(`${baseUrl}/${id}`, updatedNumber)
+    return request.then(res => res.data)
+}
+
+
 export default {
     getAll,
     add,
     remove,
+    update,
 }

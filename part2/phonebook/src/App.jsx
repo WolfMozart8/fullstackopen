@@ -18,7 +18,20 @@ function App() {
 
   const addPerson = (event) => {
     event.preventDefault()
+
     if (checkRepeated()) {
+      const isReplacement = window.confirm(`${newName} is already added to phonbook, replace the old number?`)
+      if (isReplacement) {
+        const personToUpdate = persons.filter(p => p.name.toLowerCase() === newName.toLowerCase())
+        const updatedPerson = {...personToUpdate[0], number: newPhone}
+
+        personService
+          .update(updatedPerson.id, updatedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedPerson))
+          })
+      }
+
       return
     }
 
@@ -67,7 +80,7 @@ function App() {
 
     persons.forEach(person => {
       if (person.name === newName) {
-        alert(`${newName} is already added to phonebook`)
+        // alert(`${newName} is already added to phonebook`)
         isRepeated = true
         return
       }
