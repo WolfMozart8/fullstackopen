@@ -29,10 +29,24 @@ function App() {
 
     personService
       .add(newPerson)
+      .then((res) => {
+        // res is newPerson, but includes the id
+        setPersons(persons.concat(res))
+        setNewName("")
+        setNewPhone("")
+      })
+  }
 
-    setPersons(persons.concat(newPerson))
-    setNewName("")
-    setNewPhone("")
+  const deletePerson = (id) => {
+    const personToDelete = persons.find(person => person.id === id )
+    const isDelete = window.confirm(`delete ${personToDelete.name} ?`)
+
+    if (isDelete) {
+      personService
+        .remove(id)
+
+        setPersons(persons.filter(person => person.id != id))
+    }
   }
 
   const newNameHandler = (event) => {
@@ -82,7 +96,7 @@ function App() {
         newPhoneHandler={newPhoneHandler}
       />
       <h2>Numbers</h2>
-      <PersonList personList={filteredByName} />
+      <PersonList personList={filteredByName} deleteHandler={deletePerson} />
     </div>
   )
 }
