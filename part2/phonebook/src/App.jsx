@@ -23,8 +23,12 @@ function App() {
 
     const newPerson = {
       name: newName,
-      phone: newPhone,
+      number: newPhone,
     }
+
+    axios.post("http://localhost:3001/persons", newPerson)
+      .catch(error => console.error(error))
+
     setPersons(persons.concat(newPerson))
     setNewName("")
     setNewPhone("")
