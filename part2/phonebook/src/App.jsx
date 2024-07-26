@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import PersonsForm from './components/PersonForm';
 import PersonList from './components/PersonList';
 import Notification from './components/Notification';
+import ErrorMessage from './components/ErrorMessage';
 
 function App() {
   const [persons, setPersons] = useState([])
@@ -14,6 +15,7 @@ function App() {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState("");
   const [messageAdd, setMessageAdd] = useState(null);
+  const [messageError, setMessageError] = useState(null);
 
   const [search, setSearch] = useState("");
   const filteredByName = search === ""
@@ -33,6 +35,9 @@ function App() {
           .update(updatedPerson.id, updatedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== updatedPerson.id ? person : returnedPerson))
+          })
+          .catch(() => {
+            showErrorMessage(newName)
           })
       }
 
@@ -102,6 +107,12 @@ function App() {
     }, 5000)
   }
 
+  const showErrorMessage = (personName) => {
+    setMessageError(`Information of ${personName} has already been removed fromserver`)
+    setTimeout(() => {
+      setMessageError(null)
+    }, 5000)
+  }
 
   useEffect(() => {
     personService
@@ -112,6 +123,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      <ErrorMessage message={messageError} />
       <Notification message={messageAdd} />
       <Filter search={search} searchHandler={searchByName} />
       <h2>add a new</h2>
