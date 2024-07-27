@@ -11,22 +11,22 @@ const MAX_COUNTRIES = 10
 function App() {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setfilteredCountries] = useState([]);
+  const [singleCountry, setSingleCountry] = useState(null);
   const [search, setSearch] = useState("");
 
-  const country = {
-    name: "test",
-    capital: "test capital",
-    area: 1231,
-    flags: {
-      png: "test"
-    }
-  }
 
 
   const searchHandler = (event) => {
     setSearch(event.target.value)
   }
 
+  const getSingleCountry = (countryName) => {
+    countriesService
+      .getByName(countryName)
+      .then(country => setSingleCountry(country))
+  }
+
+  // initialize countries array
   useEffect(() => {
     countriesService
       .getAll()
@@ -36,13 +36,19 @@ function App() {
       )
   }, [])
 
+  // Filter by < 10 contries or single country
   useEffect(() => {
     if (countries) {
       const filtered = countries.filter(
         country => country.name.common.toLowerCase().includes(search.toLowerCase())
       )
-      setfilteredCountries(filtered)
-      console.log(filteredCountries);
+      if (filtered.length === 1) {
+        setSingleCountry(filtered[0])
+      } else {
+        setSingleCountry(null)
+        setfilteredCountries(filtered)
+      }
+
     }
   }, [search])
 
@@ -50,13 +56,10 @@ function App() {
     <>
     <Search search={search} searchHandler={searchHandler} />
     {
-      filteredCountries.length === 1
-      ? <Country country={filteredCountries[0]}/>
-      : <CountryList countries={filteredCountries} max={MAX_COUNTRIES} />
+      singleCountry
+      ? <Country country={singleCountry}/>
+      : <CountryList countries={filteredCountries} max={MAX_COUNTRIES} showCountry={getSingleCountry} />
     }
-
-    {/* <h1>{filteredCountries.map(a => <div>{a.name.common}</div>)}</h1> */}
-    {/* <Country country={country}/> */}
     </>
   )
 }

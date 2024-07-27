@@ -7,6 +7,12 @@ const getAll = () => {
     return request.then(res => res.data)
 }
 
+const getByName = (name) => {
+    const request = axios.get(`${baseUrlName}${name}`)
+    return request.then(res => res.data)
+}
+
 export default {
-    getAll
+    getAll,
+    getByName,
 }
