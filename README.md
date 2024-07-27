@@ -10,4 +10,4 @@
 
 ## PART 2
 - Started: 07/24/2024
-- Finished: in progress...
+- Finished: 07/27/2024
